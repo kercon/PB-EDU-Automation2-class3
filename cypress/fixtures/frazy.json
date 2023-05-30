@@ -1,0 +1,15 @@
+[
+    {
+        "fraza":"Wikipedia",
+        "querylower":"wikipedia",
+        "urllower":"wikipedia"
+
+    },
+    {
+        "fraza":"Wikipedia"
+    },
+    {
+        "fraza":"politechnika bialostocka",
+        "query":"?q=politechnika+bialostocka"
+    }
+]

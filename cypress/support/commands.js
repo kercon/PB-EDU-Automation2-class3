@@ -23,3 +23,38 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('lazy', () => {
+    cy.log("I'm lazy")
+})
+
+Cypress.Commands.add('closepopup', () => {
+    cy.get('#L2AGLb > .QS5gu').click().should('not.be.visible')
+})
+
+Cypress.Commands.add('checkVisible',
+    { prevSubject: 'element' },
+    (subject, options) => {
+        cy.wrap(subject).should('be.visible')
+    })
+
+
+Cypress.Commands.add('closePopUpB', () => {
+    cy.get('body').then(($body) => {
+        if ($body.find('#L2AGLb > .QS5gu').length > 0) {
+            cy.get('#L2AGLb > .QS5gu').then(($button) => {
+                if ($button.is(':visible')) {
+                    cy.wrap($button).click();
+                }
+            })
+        }
+    })
+})
+
+Cypress.Commands.overwrite('type', 
+    function(originalFn, element, text, options) {
+    const d = new Date();
+    let saltedtext = text.replace("[salt]", d.getUTCDate().toString() + "_" + (d.getUTCMonth() + 1).toString() +
+        "_" + d.getHours().toString() + d.getMinutes().toString() + d.getUTCSeconds().toString());
+    return originalFn(element, saltedtext, options);
+});
